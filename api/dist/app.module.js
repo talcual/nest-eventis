@@ -12,6 +12,7 @@ const core_1 = require("@nestjs/core");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const v1_module_1 = require("./v1/v1.module");
+const v2_module_1 = require("./v2/v2.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -19,12 +20,13 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             v1_module_1.V1Module,
+            v2_module_1.V2Module,
             core_1.RouterModule.register([
                 {
                     path: 'v1',
                     module: v1_module_1.V1Module
                 }
-            ])
+            ]),
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
