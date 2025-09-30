@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@nestjs/cli": "^11.0.10",
+    "dotenv": "^17.2.3",
     "global": "^4.4.0"
   }
 }

@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { ParticipanteController } from './participante/participante.controller';
 
-@Module({})
+@Module({
+  controllers: [ParticipanteController]
+})
 export class V2Module {}

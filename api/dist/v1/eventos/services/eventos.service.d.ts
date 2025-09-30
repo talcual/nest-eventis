@@ -1,3 +1,4 @@
 export declare class EventoService {
-    list(): Array<any>;
+    create(): Promise<void>;
+    list(): Promise<any[]>;
 }

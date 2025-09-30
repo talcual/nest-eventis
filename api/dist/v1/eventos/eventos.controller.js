@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventosController = void 0;
 const common_1 = require("@nestjs/common");
 const eventos_service_1 = require("./services/eventos.service");
+const passport_1 = require("@nestjs/passport");
 let EventosController = class EventosController {
     eventoService;
     constructor(eventoService) {
@@ -30,6 +31,7 @@ __decorate([
 ], EventosController.prototype, "getEventos", null);
 exports.EventosController = EventosController = __decorate([
     (0, common_1.Controller)('eventos'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     __metadata("design:paramtypes", [eventos_service_1.EventoService])
 ], EventosController);
 //# sourceMappingURL=eventos.controller.js.map

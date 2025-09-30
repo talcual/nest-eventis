@@ -11,13 +11,24 @@ const common_1 = require("@nestjs/common");
 const eventos_controller_1 = require("./eventos/eventos.controller");
 const eventos_service_1 = require("./eventos/services/eventos.service");
 const ciudad_controller_1 = require("./ciudad/ciudad.controller");
+const user_service_1 = require("../services/user/user.service");
+const auth_service_1 = require("../services/auth/auth.service");
+const jwt_1 = require("@nestjs/jwt");
+const jwt_strategy_1 = require("../strategies/jwt.strategy");
 let V1Module = class V1Module {
 };
 exports.V1Module = V1Module;
 exports.V1Module = V1Module = __decorate([
     (0, common_1.Module)({
+        imports: [],
         controllers: [eventos_controller_1.EventosController, ciudad_controller_1.CiudadController],
-        providers: [eventos_service_1.EventoService]
+        providers: [
+            eventos_service_1.EventoService,
+            user_service_1.UserService,
+            auth_service_1.AuthService,
+            jwt_1.JwtService,
+            jwt_strategy_1.JwtStrategy
+        ]
     })
 ], V1Module);
 //# sourceMappingURL=v1.module.js.map

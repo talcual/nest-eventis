@@ -8,12 +8,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventoService = void 0;
 const common_1 = require("@nestjs/common");
+const prisma_1 = require("../../../../generated/prisma/index.js");
+const prisma = new prisma_1.PrismaClient();
 let EventoService = class EventoService {
-    list() {
-        return [
-            { 'nombre': 'CaribeBiz Forum' },
-            { 'nombre': 'Concierto' }
-        ];
+    async create() {
+        const newUser = await prisma.evento.create({
+            data: {
+                nombre: '',
+                lugar: ''
+            }
+        });
+        console.log(newUser);
+    }
+    async list() {
+        let listado = await prisma.evento.findMany();
+        return listado;
     }
 };
 exports.EventoService = EventoService;

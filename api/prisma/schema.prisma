@@ -20,4 +20,14 @@ model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
+  passwd_s String
+}
+
+
+model Evento{
+  id Int @id @default(autoincrement())
+  nombre String
+  lugar String
+  created_at DateTime @default(now())
+  update_at DateTime @updatedAt
 }
