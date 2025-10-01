@@ -31,3 +31,17 @@ model Evento{
   created_at DateTime @default(now())
   update_at DateTime @updatedAt
 }
+
+model Ciudad{
+  id Int @id @default(autoincrement())
+  nombre String
+  status String
+  created_at DateTime @default(now())
+  update_at  DateTime @updatedAt
+}
+
+model Participante{
+  id Int @id @default(autoincrement())
+  id_user Int
+  id_evento Int
+}

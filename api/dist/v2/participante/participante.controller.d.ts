@@ -1,5 +1,10 @@
+import { ParticipanteService } from '../services/participante/participante.service';
 export declare class ParticipanteController {
-    list(): {
-        name: string;
-    }[];
+    private readonly participanteService;
+    constructor(participanteService: ParticipanteService);
+    list(): Promise<{
+        id: number;
+        id_user: number;
+        id_evento: number;
+    }[]>;
 }

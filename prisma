@@ -4,6 +4,10 @@ npx prisma migrate dev --name init
 
 npx prisma generate
 
+npx prisma init
+
+
+
 
 import { PrismaClient } from '@prisma/client';
 
@@ -27,3 +31,9 @@ main().catch(e => console.error(e));
 
 
 supabase.com
+
+
+
+
+yarn add @nestjs/passport passport passport-jwt 
+yarn add -D @types/passport-jwt

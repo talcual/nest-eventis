@@ -11,9 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ParticipanteController = void 0;
 const common_1 = require("@nestjs/common");
+const participante_service_1 = require("../services/participante/participante.service");
+const passport_1 = require("@nestjs/passport");
 let ParticipanteController = class ParticipanteController {
+    participanteService;
+    constructor(participanteService) {
+        this.participanteService = participanteService;
+    }
     list() {
-        return [{ name: 'Juan' }];
+        return this.participanteService.getAllParticipantes();
     }
 };
 exports.ParticipanteController = ParticipanteController;
@@ -24,6 +30,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ParticipanteController.prototype, "list", null);
 exports.ParticipanteController = ParticipanteController = __decorate([
-    (0, common_1.Controller)('participante')
+    (0, common_1.Controller)('participante'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    __metadata("design:paramtypes", [participante_service_1.ParticipanteService])
 ], ParticipanteController);
 //# sourceMappingURL=participante.controller.js.map

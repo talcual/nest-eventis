@@ -7,17 +7,14 @@ import { JwtService } from '@nestjs/jwt';
 export class AuthService {
 
     constructor(
-         private usersService: UserService,
-         private jwtService: JwtService
+         private usersService: UserService,private jwtService: JwtService
     ){
 
     }
 
 
-  async signIn(
-    username: string,
-    pass: string,
-  ): Promise<{ access_token: string }> {
+  async signIn(username: string, pass: string,): Promise<{ access_token: string }> {
+    
     const user = await this.usersService.findOne(username);
     
     if (user?.passwd_s !== pass) {
