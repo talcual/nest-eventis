@@ -24,10 +24,6 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            config_1.ConfigModule.forRoot({
-                isGlobal: true,
-                envFilePath: '.env'
-            }),
             v1_module_1.V1Module,
             v2_module_1.V2Module,
             core_1.RouterModule.register([
@@ -41,6 +37,10 @@ exports.AppModule = AppModule = __decorate([
                 }
             ]),
             v3_module_1.V3Module,
+            config_1.ConfigModule.forRoot({
+                isGlobal: true,
+                envFilePath: '.env'
+            }),
             jwt_1.JwtModule.registerAsync({
                 imports: [config_1.ConfigModule],
                 inject: [config_1.ConfigService],

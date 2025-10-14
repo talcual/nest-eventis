@@ -13,10 +13,6 @@ import { UserService } from './services/user/user.service';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ 
-      isGlobal: true,
-      envFilePath: '.env'
-    }),
     V1Module,
     V2Module,
     RouterModule.register([
@@ -30,6 +26,10 @@ import { UserService } from './services/user/user.service';
       }
     ]),
     V3Module,
+    ConfigModule.forRoot({ 
+      isGlobal: true,
+      envFilePath: '.env'
+    }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

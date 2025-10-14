@@ -36,4 +36,5 @@ supabase.com
 
 
 yarn add @nestjs/passport passport passport-jwt 
+
 yarn add -D @types/passport-jwt
