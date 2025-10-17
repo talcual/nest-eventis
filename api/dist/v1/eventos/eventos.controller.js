@@ -8,18 +8,29 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventosController = void 0;
 const common_1 = require("@nestjs/common");
 const eventos_service_1 = require("./services/eventos.service");
-const passport_1 = require("@nestjs/passport");
+const client_mongo_1 = require("@prisma/client-mongo");
+const prismaMg = new client_mongo_1.PrismaClient();
 let EventosController = class EventosController {
     eventoService;
     constructor(eventoService) {
         this.eventoService = eventoService;
     }
-    getEventos() {
+    async getEventos() {
+        await prismaMg.log.create({
+            data: { message: `Evento listado` },
+        });
         return this.eventoService.list();
+    }
+    async getEvento(id) {
+        let x = parseInt(id.toString());
+        return this.eventoService.findOne(x);
     }
 };
 exports.EventosController = EventosController;
@@ -27,11 +38,17 @@ __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], EventosController.prototype, "getEventos", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], EventosController.prototype, "getEvento", null);
 exports.EventosController = EventosController = __decorate([
     (0, common_1.Controller)('eventos'),
-    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     __metadata("design:paramtypes", [eventos_service_1.EventoService])
 ], EventosController);
 //# sourceMappingURL=eventos.controller.js.map

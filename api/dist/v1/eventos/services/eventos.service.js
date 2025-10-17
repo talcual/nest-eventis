@@ -21,8 +21,47 @@ let EventoService = class EventoService {
         console.log(newUser);
     }
     async list() {
-        let listado = await prisma.evento.findMany();
+        let listado = await prisma.evento.findMany({
+            select: {
+                id: true,
+                nombre: true,
+                lugar: true,
+                ciudad: {
+                    select: {
+                        id: true,
+                        nombre: true
+                    }
+                }
+            }
+        });
         return listado;
+    }
+    async findOne(id) {
+        const user = await prisma.evento.findUnique({
+            where: { id: id },
+            select: {
+                id: true,
+                nombre: true,
+                lugar: true,
+                ciudad: {
+                    select: {
+                        id: true,
+                        nombre: true
+                    }
+                }
+            }
+        });
+        return user;
+    }
+    async update(id) {
+        const updatedUser = await prisma.evento.update({
+            where: { id: id },
+            data: {
+                nombre: 'Evento Actualizado',
+                lugar: 'Lugar Actualizado'
+            }
+        });
+        console.log(updatedUser);
     }
 };
 exports.EventoService = EventoService;

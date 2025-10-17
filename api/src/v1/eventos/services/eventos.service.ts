@@ -18,8 +18,52 @@ export class EventoService {
     }
 
     async list(){
-        let listado: Array<any> = await prisma.evento.findMany()
+        let listado: Array<any> = await prisma.evento.findMany({
+            select: {
+                id: true,
+                nombre: true,
+                lugar: true,
+                ciudad: {
+                    select: {
+                        id: true,
+                        nombre: true
+                    }
+                }
+            }
+        })
+
         return listado;
+    }
+
+    async findOne(id: number){
+        const user = await prisma.evento.findUnique({
+            where: { id: id },
+            select: {
+                id: true,
+                nombre: true,
+                lugar: true,
+                ciudad: {
+                    select: {
+                        id: true,
+                        nombre: true
+                    }
+                }
+            }
+        })
+
+        return user;
+    }
+
+    async update(id: number){
+        const updatedUser = await prisma.evento.update({
+            where: { id: id },
+            data: {
+                nombre: 'Evento Actualizado',
+                lugar: 'Lugar Actualizado'
+            }
+        })
+
+        console.log(updatedUser)
     }
 
 }

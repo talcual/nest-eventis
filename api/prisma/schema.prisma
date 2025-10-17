@@ -11,7 +11,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // models
@@ -28,6 +29,8 @@ model Evento{
   id Int @id @default(autoincrement())
   nombre String
   lugar String
+  ciudad_id Int @default(1)
+  ciudad Ciudad @relation(fields:[ciudad_id], references: [id])
   created_at DateTime @default(now())
   update_at DateTime @updatedAt
 }
@@ -36,6 +39,7 @@ model Ciudad{
   id Int @id @default(autoincrement())
   nombre String
   status String
+  Eventos Evento[]
   created_at DateTime @default(now())
   update_at  DateTime @updatedAt
 }
@@ -44,4 +48,10 @@ model Participante{
   id Int @id @default(autoincrement())
   id_user Int
   id_evento Int
+}
+
+model Entradas{
+  id Int @id @default(autoincrement())
+  nombre String
+  precio Int
 }
