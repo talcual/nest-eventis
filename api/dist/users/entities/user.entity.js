@@ -9,22 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = void 0;
-const common_1 = require("@nestjs/common");
-const prisma_1 = require("../../../generated/prisma/index.js");
-const prisma = new prisma_1.PrismaClient();
-let UserService = class UserService {
-    constructor() { }
-    async findAll() {
-        return await prisma.user.findMany();
-    }
-    async findOne(username) {
-        return await prisma.user.findFirst({ where: { email: username } });
-    }
+exports.User = void 0;
+const graphql_1 = require("@nestjs/graphql");
+let User = class User {
+    id;
+    name;
+    email;
 };
-exports.UserService = UserService;
-exports.UserService = UserService = __decorate([
-    (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [])
-], UserService);
-//# sourceMappingURL=user.service.js.map
+exports.User = User;
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int),
+    __metadata("design:type", Number)
+], User.prototype, "id", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
+], User.prototype, "name", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
+], User.prototype, "email", void 0);
+exports.User = User = __decorate([
+    (0, graphql_1.ObjectType)()
+], User);
+//# sourceMappingURL=user.entity.js.map

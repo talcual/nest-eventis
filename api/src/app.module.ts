@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -10,6 +13,7 @@ import { V2Module } from './v2/v2.module';
 import { V3Module } from './v3/v3.module';
 import { AuthService } from './services/auth/auth.service';
 import { UserService } from './services/user/user.service';
+import { UsersResolver } from './resolvers/users/users.resolver';
 
 @Module({
   imports: [
@@ -41,9 +45,14 @@ import { UserService } from './services/user/user.service';
           signOptions: { expiresIn: '1h' },
         };
       },
+    }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/graphql/schema.gql'), // genera el esquema automáticamente
+      playground: true, // habilita la consola interactiva
     })
   ],
   controllers: [AppController],
-  providers: [AppService, AuthService, UserService],
+  providers: [AppService, AuthService, UserService, UsersResolver],
 })
 export class AppModule {}

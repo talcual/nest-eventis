@@ -1,0 +1,141 @@
+
+Para instalar GraphQL
+
+yarn add / npm install
+ 
+  @nestjs/graphql
+  @nestjs/apollo
+  @apollo/server
+  @as-integrations/express5
+  
+
+
+
+
+
+import { Module } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
+import { UsersModule } from './users/users.module';
+
+@Module({
+  imports: [
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'), // genera el esquema automáticamente
+      playground: true, // habilita la consola interactiva
+    }),
+    UsersModule,
+  ],
+})
+export class AppModule {}
+
+
+módulo, servicio y resolver
+
+nest generate module users
+nest generate service users
+nest generate resolver users
+
+
+
+// src/users/entities/user.entity.ts
+import { ObjectType, Field, Int } from '@nestjs/graphql';
+
+@ObjectType() // indica que este tipo se expone en GraphQL
+export class User {
+  @Field(() => Int)
+  id: number;
+
+  @Field()
+  name: string;
+
+  @Field()
+  email: string;
+}
+
+
+
+// src/users/users.resolver.ts
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { UsersService } from './users.service';
+import { User } from './entities/user.entity';
+
+@Resolver(() => User)
+export class UsersResolver {
+  constructor(private readonly usersService: UsersService) {}
+
+  @Query(() => [User], { name: 'users' })
+  findAll() {
+    return this.usersService.findAll();
+  }
+
+  @Query(() => User, { name: 'user' })
+  findOne(@Args('id', { type: () => Int }) id: number) {
+    return this.usersService.findOne(id);
+  }
+
+  @Mutation(() => User)
+  createUser(
+    @Args('name') name: string,
+    @Args('email') email: string,
+  ): User {
+    return this.usersService.create({ name, email });
+  }
+}
+
+
+
+
+// src/users/users.service.ts
+import { Injectable } from '@nestjs/common';
+import { User } from './entities/user.entity';
+
+@Injectable()
+export class UsersService {
+  private users: User[] = [
+    { id: 1, name: 'Luis', email: 'luis@example.com' },
+    { id: 2, name: 'Ana', email: 'ana@example.com' },
+  ];
+
+  findAll(): User[] {
+    return this.users;
+  }
+
+  findOne(id: number): User {
+    return this.users.find(user => user.id === id);
+  }
+
+  create(data: Partial<User>): User {
+    const user: User = {
+      id: this.users.length + 1,
+      ...data,
+    };
+    this.users.push(user);
+    return user;
+  }
+}
+
+
+
+
+Obtener usuarios
+
+query {
+  users {
+    id
+    name
+    email
+  }
+}
+
+
+
+Crear un usuario
+mutation {
+  createUser(name: "Carlos", email: "carlos@example.com") {
+    id
+    name
+  }
+}

@@ -11,6 +11,9 @@ const common_1 = require("@nestjs/common");
 const core_1 = require("@nestjs/core");
 const config_1 = require("@nestjs/config");
 const jwt_1 = require("@nestjs/jwt");
+const graphql_1 = require("@nestjs/graphql");
+const apollo_1 = require("@nestjs/apollo");
+const path_1 = require("path");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const v1_module_1 = require("./v1/v1.module");
@@ -18,6 +21,7 @@ const v2_module_1 = require("./v2/v2.module");
 const v3_module_1 = require("./v3/v3.module");
 const auth_service_1 = require("./services/auth/auth.service");
 const user_service_1 = require("./services/user/user.service");
+const users_resolver_1 = require("./resolvers/users/users.resolver");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -52,10 +56,15 @@ exports.AppModule = AppModule = __decorate([
                         signOptions: { expiresIn: '1h' },
                     };
                 },
+            }),
+            graphql_1.GraphQLModule.forRoot({
+                driver: apollo_1.ApolloDriver,
+                autoSchemaFile: (0, path_1.join)(process.cwd(), 'src/graphql/schema.gql'),
+                playground: true,
             })
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService, auth_service_1.AuthService, user_service_1.UserService],
+        providers: [app_service_1.AppService, auth_service_1.AuthService, user_service_1.UserService, users_resolver_1.UsersResolver],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

@@ -12,42 +12,38 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EventosController = void 0;
-const common_1 = require("@nestjs/common");
-const eventos_service_1 = require("./services/eventos.service");
+exports.UsersResolver = void 0;
+const graphql_1 = require("@nestjs/graphql");
 const user_service_1 = require("../../services/user/user.service");
-let EventosController = class EventosController {
-    eventoService;
+const user_entity_1 = require("../../users/entities/user.entity");
+let UsersResolver = class UsersResolver {
     userService;
-    constructor(eventoService, userService) {
-        this.eventoService = eventoService;
+    constructor(userService) {
         this.userService = userService;
     }
-    async getEventos() {
+    findAll() {
         return this.userService.findAll();
-        return this.eventoService.list();
     }
-    async getEvento(id) {
-        let x = parseInt(id.toString());
-        return this.eventoService.findOne(x);
+    findOne(id) {
+        return this.userService.findOne(id.toString());
     }
 };
-exports.EventosController = EventosController;
+exports.UsersResolver = UsersResolver;
 __decorate([
-    (0, common_1.Get)(),
+    (0, graphql_1.Query)(() => [user_entity_1.User], { name: 'users' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], EventosController.prototype, "getEventos", null);
+    __metadata("design:returntype", void 0)
+], UsersResolver.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, graphql_1.Query)(() => user_entity_1.User, { name: 'user' }),
+    __param(0, (0, graphql_1.Args)('id', { type: () => graphql_1.Int })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
-], EventosController.prototype, "getEvento", null);
-exports.EventosController = EventosController = __decorate([
-    (0, common_1.Controller)('eventos'),
-    __metadata("design:paramtypes", [eventos_service_1.EventoService, user_service_1.UserService])
-], EventosController);
-//# sourceMappingURL=eventos.controller.js.map
+    __metadata("design:returntype", void 0)
+], UsersResolver.prototype, "findOne", null);
+exports.UsersResolver = UsersResolver = __decorate([
+    (0, graphql_1.Resolver)(() => user_entity_1.User),
+    __metadata("design:paramtypes", [user_service_1.UserService])
+], UsersResolver);
+//# sourceMappingURL=users.resolver.js.map
