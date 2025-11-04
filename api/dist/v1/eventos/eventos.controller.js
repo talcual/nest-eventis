@@ -24,7 +24,6 @@ let EventosController = class EventosController {
         this.userService = userService;
     }
     async getEventos() {
-        return this.userService.findAll();
         return this.eventoService.list();
     }
     async getEvento(id) {

@@ -22,7 +22,7 @@ export class EventosController {
     //   data: { message: `Evento listado` },
     // });
 
-    return this.userService.findAll();
+    //return this.userService.findAll();
     return this.eventoService.list();
   }
 
