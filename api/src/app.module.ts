@@ -14,6 +14,7 @@ import { V3Module } from './v3/v3.module';
 import { AuthService } from './services/auth/auth.service';
 import { UserService } from './services/user/user.service';
 import { UsersResolver } from './resolvers/users/users.resolver';
+import { RealtimeModule } from './realtime/realtime.module';
 
 @Module({
   imports: [
@@ -50,7 +51,8 @@ import { UsersResolver } from './resolvers/users/users.resolver';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/graphql/schema.gql'), // genera el esquema automáticamente
       playground: true, // habilita la consola interactiva
-    })
+    }),
+    RealtimeModule
   ],
   controllers: [AppController],
   providers: [AppService, AuthService, UserService, UsersResolver],

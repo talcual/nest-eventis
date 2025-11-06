@@ -22,6 +22,7 @@ const v3_module_1 = require("./v3/v3.module");
 const auth_service_1 = require("./services/auth/auth.service");
 const user_service_1 = require("./services/user/user.service");
 const users_resolver_1 = require("./resolvers/users/users.resolver");
+const realtime_module_1 = require("./realtime/realtime.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -61,7 +62,8 @@ exports.AppModule = AppModule = __decorate([
                 driver: apollo_1.ApolloDriver,
                 autoSchemaFile: (0, path_1.join)(process.cwd(), 'src/graphql/schema.gql'),
                 playground: true,
-            })
+            }),
+            realtime_module_1.RealtimeModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, auth_service_1.AuthService, user_service_1.UserService, users_resolver_1.UsersResolver],
